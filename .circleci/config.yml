@@ -1,0 +1,51 @@
+version: 2
+jobs:
+  validate:
+    docker:
+      - image: broadinstitute/terraform:0.11.8
+        entrypoint: /bin/bash
+    steps:
+      - checkout
+      - run:
+          name: checks
+          command: |
+            cd ./modules/k8s
+            terraform init \
+              -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
+              -backend-config="secret_key=$SPACES_SECRET_KEY" \
+              -backend-config="bucket=$SPACES_BUCKET_NAME" \
+              -backend-config="endpoint=$SPACES_ENDPOINT"
+            terraform validate
+            terraform plan
+
+  deploy:
+    docker:
+      - image: broadinstitute/terraform:0.11.8
+        entrypoint: /bin/bash
+    steps:
+      - checkout
+      - run:
+          name: dependencies
+          command: |
+            apk add --no-cache curl
+
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+
+      - run:
+          name: deploy
+          command: |
+            ./scripts/deploy.sh
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - validate
+      - deploy:
+          requires:
+            - validate
+          filters:
+            branches:
+              only: /^master$/
