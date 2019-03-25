@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 set -xe
 
-NODE_COUNT=${1:-2}
+NODE_COUNT=2
 
 cd ./modules/k8s
 terraform init \
