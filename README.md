@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/w3f/platform.svg?style=svg)](https://circleci.com/gh/w3f/platform)
+
 # W3F Platform
 
 This repo contains files for creating and managing the infrastructure platform
