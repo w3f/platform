@@ -2,7 +2,7 @@ version: 2
 jobs:
   validate:
     docker:
-      - image: broadinstitute/terraform:0.11.12
+      - image: hashicorp/terraform:0.11.12
         entrypoint: /bin/bash
     steps:
       - checkout
