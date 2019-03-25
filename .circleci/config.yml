@@ -20,8 +20,8 @@ jobs:
 
   deploy:
     docker:
-      - image: broadinstitute/terraform:0.11.8
-        entrypoint: /bin/bash
+      - image: hashicorp/terraform:0.11.12
+        entrypoint: /bin/sh
     steps:
       - checkout
       - run:
