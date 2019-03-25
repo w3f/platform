@@ -39,7 +39,11 @@ These values are set in the CI configuration and are accessible from the
 `Infrastructure` vault on 1Password in an item called `DigitalOcean API credentials`.
 
 * `.circleci`: contains the configuration files for the CI/CD provider, currently
-CircleCI. This configuration defines
+CircleCI. This configuration defines the deployment pipeline, composed of two steps:
+
+  * Verification: simple tests to check that the infrastructure code is not broken.
+  * Deployment: actual execution of the infrastructure code, only runs when the previous
+  step has passed.
 
 ## Workflow
 
