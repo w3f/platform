@@ -11,7 +11,3 @@ terraform init \
           -backend-config="endpoint=$SPACES_ENDPOINT"
 
 terraform apply -auto-approve -var node_count=${NODE_COUNT}
-
-terraform output kubeconfig | tee kubeconfig.yaml
-
-# export KUBECONFIG=$(pwd)/kubeconfig.yaml
