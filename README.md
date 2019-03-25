@@ -29,11 +29,11 @@ The most important file is `deploy.sh`, which is used for initializing
 the backend, applying the configuration and showing the configuration for accessing
 the target cluster. It requires these environment variables:
 
-    * `$TF_VAR_do_token`
-    * `$SPACES_ACCESS_TOKEN`
-    * `$SPACES_SECRET_KEY`
-    * `$SPACES_BUCKET_NAME`
-    * `$SPACES_ENDPOINT`
+* `$TF_VAR_do_token`
+* `$SPACES_ACCESS_TOKEN`
+* `$SPACES_SECRET_KEY`
+* `$SPACES_BUCKET_NAME`
+* `$SPACES_ENDPOINT`
 
 These values are set in the CI configuration and are accessible from the
 `Infrastructure` vault on 1Password in an item called `DigitalOcean API credentials`.
