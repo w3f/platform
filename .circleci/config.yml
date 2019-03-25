@@ -3,7 +3,7 @@ jobs:
   validate:
     docker:
       - image: hashicorp/terraform:0.11.12
-        entrypoint: /bin/bash
+        entrypoint: /bin/sh
     steps:
       - checkout
       - run:
