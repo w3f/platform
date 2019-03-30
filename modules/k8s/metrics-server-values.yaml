@@ -1,0 +1,4 @@
+args:
+  - --logtostderr
+  - --kubelet-preferred-address-types=InternalIP
+  - --kubelet-insecure-tls
