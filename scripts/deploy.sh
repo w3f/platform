@@ -12,7 +12,7 @@ terraform init \
 
 terraform apply -auto-approve -var node_count=${NODE_COUNT}
 
-terraform output kubeconfig | tee kubeconfig.yaml
+terraform output kubeconfig &> kubeconfig.yaml
 export KUBECONFIG=$(pwd)/kubeconfig.yaml
 
 helm init --client-only
