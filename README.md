@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/w3f/platform.svg?style=svg)](https://circleci.com/gh/w3f/platform)
+
 # W3F Platform
 
 This repo contains files for creating and managing the infrastructure platform
@@ -23,21 +25,25 @@ resource, see [here](https://www.terraform.io/docs/providers/do/r/kubernetes_clu
 for details.
 
 * `scripts`: shell code to call terraform from the docker containers run by the
-CI/CD provider.
-
-The most important file is `deploy.sh`, which is used for initializing
+CI/CD provider. The most important file is `deploy.sh`, which is used for initializing
 the backend, applying the configuration and showing the configuration for accessing
 the target cluster. It requires these environment variables:
-    * `$TF_VAR_do_token`
-    * `$SPACES_ACCESS_TOKEN`
-    * `$SPACES_SECRET_KEY`
-    * `$SPACES_BUCKET_NAME`
-    * `$SPACES_ENDPOINT`
+
+  * `$TF_VAR_do_token`
+  * `$SPACES_ACCESS_TOKEN`
+  * `$SPACES_SECRET_KEY`
+  * `$SPACES_BUCKET_NAME`
+  * `$SPACES_ENDPOINT`
+
 These values are set in the CI configuration and are accessible from the
 `Infrastructure` vault on 1Password in an item called `DigitalOcean API credentials`.
 
 * `.circleci`: contains the configuration files for the CI/CD provider, currently
-CircleCI. This configuration defines
+CircleCI. This configuration defines the deployment pipeline, composed of two steps:
+
+  * Verification: simple tests to check that the infrastructure code is not broken.
+  * Deployment: actual execution of the infrastructure code, only runs when the previous
+  step has passed.
 
 ## Workflow
 
