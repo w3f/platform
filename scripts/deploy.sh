@@ -16,4 +16,4 @@ terraform output kubeconfig &> kubeconfig.yaml
 export KUBECONFIG=$(pwd)/kubeconfig.yaml
 
 helm init --client-only
-helm install --name metrics stable/metrics-server --namespace kube-system -f metrics-server-values.yaml
+helm upgrade --install --name metrics stable/metrics-server --namespace kube-system -f metrics-server-values.yaml
