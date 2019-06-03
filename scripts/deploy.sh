@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 set -xe
 
 NODE_COUNT=4
 
-cd ./modules/k8s
+cd ./modules/${DEPLOYMENT}
 terraform init \
           -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
           -backend-config="secret_key=$SPACES_SECRET_KEY" \

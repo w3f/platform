@@ -19,6 +19,8 @@ jobs:
             terraform plan
 
   deploy:
+    environment:
+      DEPLOYMENT: w3f
     docker:
       - image: hashicorp/terraform:0.11.12
         entrypoint: /bin/sh
