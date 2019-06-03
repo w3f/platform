@@ -19,5 +19,5 @@ terraform apply -auto-approve -var node_count=${NODE_COUNT}
 terraform output kubeconfig &> kubeconfig.yaml
 export KUBECONFIG=$(pwd)/kubeconfig.yaml
 
-helm init --client-only
+helm init #--client-only
 helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
