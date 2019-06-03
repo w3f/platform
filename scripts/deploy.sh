@@ -1,7 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 set -xe
 
-NODE_COUNT=4
+if [ "${DEPLOYMENT}" = w3f ]; then
+    NODE_COUNT=4
+else
+    NODE_COUNT=3
+fi
 
 cd ./modules/${DEPLOYMENT}
 terraform init \
