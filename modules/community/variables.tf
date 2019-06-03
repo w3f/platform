@@ -1,5 +1,9 @@
 variable "do_token" {}
 
+variable "name" {
+  default = "community"
+}
+
 variable "node_size" {
   default = "s-4vcpu-8gb"
 }

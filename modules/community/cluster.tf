@@ -1,5 +1,5 @@
-resource "digitalocean_kubernetes_cluster" "w3f" {
-  name    = "w3f"
+resource "digitalocean_kubernetes_cluster" "do_cluster" {
+  name    = "${var.name}"
   region  = "${var.region}"
   version = "${var.k8s_version}"
 
