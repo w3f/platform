@@ -19,5 +19,14 @@ terraform apply -auto-approve -var node_count=${NODE_COUNT}
 terraform output kubeconfig &> kubeconfig.yaml
 export KUBECONFIG=$(pwd)/kubeconfig.yaml
 
-helm init #--client-only
+if [ ! $(kubectl get sa -n kube-system | grep tiller) ]; then
+    kubectl -n kube-system create sa tiller
+fi
+
+if [ ! $(kubectl get clusterrolebinding | grep tiller) ]; then
+    kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+fi
+
+helm init --service-account tiller --history-max=5
+
 helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
