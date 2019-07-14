@@ -2,7 +2,7 @@
 set -xe
 
 if [ "${DEPLOYMENT}" = w3f ]; then
-    NODE_COUNT=4
+    NODE_COUNT=6
 else
     NODE_COUNT=3
 fi
