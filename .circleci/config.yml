@@ -60,7 +60,7 @@ jobs:
   developmentDeploy:
     environment:
       DEPLOYMENT: development
-      TERRAFORM_VERSION: 0.12
+      TERRAFORM_VERSION: 0.12.4
     <<: *deploy
 
 workflows:
