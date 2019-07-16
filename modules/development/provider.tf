@@ -1,3 +1,3 @@
 provider "google" {
--  project     = "polkadot-benchmarks"
+  project     = "polkadot-benchmarks"
 }
