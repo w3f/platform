@@ -4,7 +4,7 @@ set -xe
 if [ "${DEPLOYMENT}" = w3f ]; then
     NODE_COUNT=4
 else
-    NODE_COUNT=3
+    NODE_COUNT=5
 fi
 
 cd ./modules/${DEPLOYMENT}
