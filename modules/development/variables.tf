@@ -3,11 +3,11 @@ variable "cluster_name" {
 }
 
 variable "location" {
-  default = "europe-west6-a"
+  default = "europe-west4"
 }
 
 variable "node_count" {
-  default = 3
+  default = 1
 }
 
 variable "machine_type" {
