@@ -29,7 +29,7 @@ version: 2
 jobs:
   validate:
     docker:
-      - image: hashicorp/terraform:0.11.12
+      - image: hashicorp/terraform:0.12.5
         entrypoint: /bin/sh
     steps:
       - checkout
@@ -48,19 +48,19 @@ jobs:
   w3fDeploy:
     environment:
       DEPLOYMENT: w3f
-      TERRAFORM_VERSION: 0.11.12
+      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   communityDeploy:
     environment:
       DEPLOYMENT: community
-      TERRAFORM_VERSION: 0.11.12
+      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   developmentDeploy:
     environment:
       DEPLOYMENT: development
-      TERRAFORM_VERSION: 0.12.4
+      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
 workflows:
