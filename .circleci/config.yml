@@ -63,6 +63,12 @@ jobs:
       TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
+  engineeringDeploy:
+    environment:
+      DEPLOYMENT: engineering
+      TERRAFORM_VERSION: 0.12.5
+    <<: *deploy
+
 workflows:
   version: 2
   test-deploy:
