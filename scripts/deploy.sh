@@ -3,7 +3,7 @@ set -xe
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ]; then
+if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = engineering ]; then
     echo "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" | tee credentials.json
     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
