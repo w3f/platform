@@ -92,3 +92,9 @@ workflows:
           filters:
             branches:
               only: /^master$/
+      - engineeringDeploy:
+          requires:
+            - validate
+          filters:
+            branches:
+              only: /^master$/
