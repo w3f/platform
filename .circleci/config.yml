@@ -10,7 +10,7 @@ deploy: &deploy
             KUBECTL_VERSION: v1.13.4
             HELM_VERSION: v2.13.1
           command: |
-            apk add --no-cache curl
+            apk add --update-cache --upgrade curl
 
             curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
             chmod +x ./kubectl
