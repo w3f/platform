@@ -54,6 +54,27 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
+resource "google_container_node_pool" "worker_nodes" {
+  name       = "${var.cluster_name}-worker-pool"
+  location   = var.location
+  cluster    = "${google_container_cluster.primary.name}"
+  node_count = var.worker_node_count
+  version = var.k8s_version
+
+  management {
+    auto_upgrade = true
+  }
+
+  node_config {
+    preemptible  = false
+    machine_type = var.worker_machine_type
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
 
 resource "google_compute_network" "network" {
   name                    = var.cluster_name
