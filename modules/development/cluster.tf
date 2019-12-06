@@ -54,26 +54,40 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-resource "google_container_node_pool" "worker_nodes" {
-  name       = "${var.cluster_name}-worker-pool"
-  location   = var.location
-  cluster    = "${google_container_cluster.primary.name}"
-  node_count = var.worker_node_count
-  version = var.k8s_version
 
-  management {
-    auto_upgrade = true
+resource "google_compute_instance" "runner_node" {
+  name         =  "${var.cluster_name}-runner"
+  machine_type = var.runner_machine_type
+  zone         = var.location
+
+  tags = ["runner", "gitlab"]
+
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts
+    }
   }
 
-  node_config {
-    preemptible  = false
-    machine_type = var.worker_machine_type
 
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
+  provisioner "local-exec" {
+    command = "curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
+    command = "chmod +x /usr/local/bin/gitlab-runner"
+    command = "useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash"
+    command = "gitlab-runner register --non-interactive --url https://gitlab.w3f.tech/ --registration-token " var.registration-token " --executor shell"
   }
+
+  // Local SSD disk
+  //scratch_disk {
+  //  interface = "SCSI"
+  //}
+
+  network_interface {
+    network = "default"
+  }
+
+  //network = "${google_compute_network.network.self_link}"
+  //subnetwork = "${google_compute_subnetwork.subnetwork.self_link}"
+
 }
 
 resource "google_compute_network" "network" {
