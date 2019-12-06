@@ -54,9 +54,8 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-
-resource "google_compute_instance" "runner_node" {
-  name         =  "${var.cluster_name}-runner"
+resource "google_compute_instance" "runner-00" {
+  name         =  "${var.cluster_name}-runner-00"
   machine_type = var.runner_machine_type
   zone         = var.location
 
@@ -64,31 +63,46 @@ resource "google_compute_instance" "runner_node" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
     }
   }
 
-
-  provisioner "local-exec" {
-    command = "curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
-    command = "chmod +x /usr/local/bin/gitlab-runner"
-    command = "useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash"
-    command = "gitlab-runner register --non-interactive --url https://gitlab.w3f.tech/ --registration-token " var.registration-token " --executor shell"
-  }
-
   // Local SSD disk
-  //scratch_disk {
-  //  interface = "SCSI"
-  //}
+  scratch_disk {
+    interface = "SCSI"
+  }
 
   network_interface {
     network = "default"
   }
 
-  //network = "${google_compute_network.network.self_link}"
-  //subnetwork = "${google_compute_subnetwork.subnetwork.self_link}"
+  metadata = {
+    gitlab = "runner"
+    cluster = "development"
+  }
 
+  provisioner "remote-exec" {
+    command = <<EOH
+      curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64;
+      chmod +x /usr/local/bin/gitlab-runner;
+      useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+      gitlab-runner register --non-interactive --url https://gitlab.w3f.tech/ --registration-token ${var.registration-token} --executor shell
+   EOH
+  }
+
+
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
 }
+
+
+
+
+
+
+
+
 
 resource "google_compute_network" "network" {
   name                    = var.cluster_name

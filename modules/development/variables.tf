@@ -10,10 +10,6 @@ variable "node_count" {
   default = 1
 }
 
-variable "runner_node_count" {
-  default = 1
-}
-
 variable "machine_type" {
   default = "n1-standard-2"
 }
