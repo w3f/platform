@@ -89,19 +89,7 @@ resource "google_compute_instance" "runner-00" {
       gitlab-runner register --non-interactive --url https://gitlab.w3f.tech/ --registration-token ${var.registration-token} --executor shell
    EOH
   }
-
-
-  service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-  }
 }
-
-
-
-
-
-
-
 
 
 resource "google_compute_network" "network" {
