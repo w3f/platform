@@ -38,7 +38,7 @@ if [ "${DEPLOYMENT}" = development ]; then
   # https://docs.gitlab.com/runner/install/kubernetes.html
   helm repo add gitlab https://charts.gitlab.io
   helm repo update
-  helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=${var.gitlab-registration-token} gitlab/gitlab-runner
+  helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=$GITLAB_TOKEN gitlab/gitlab-runner
 
 
 
