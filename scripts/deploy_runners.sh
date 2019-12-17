@@ -29,9 +29,13 @@ else
     if [ ! $(kubectl get clusterrolebinding | grep tiller) ]; then
         kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
     fi
+
     helm init --service-account tiller --history-max=5
 
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
+    # https://docs.gitlab.com/runner/install/kubernetes.html
+    helm repo add gitlab https://charts.gitlab.io
+    helm upgrade --install --name gitlab-runner -f --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=${var.registration-token} gitlab/gitlab-runner
 
 
 
