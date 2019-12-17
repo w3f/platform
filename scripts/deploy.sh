@@ -33,7 +33,7 @@ else
     helm init --service-account tiller --history-max=5
 
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
-    helm install --name gitlab-runner -f ./values.yaml gitlab/gitlab-runner
+    helm upgrade --install --name gitlab-runner -f ./values.yaml gitlab/gitlab-runner
 
 
 
