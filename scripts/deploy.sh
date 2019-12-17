@@ -33,16 +33,11 @@ else
     helm init --service-account tiller --history-max=5
 
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
+fi
 
 if [ "${DEPLOYMENT}" = development ]; then
   # https://docs.gitlab.com/runner/install/kubernetes.html
   helm repo add gitlab https://charts.gitlab.io
   helm repo update
   helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=$GITLAB_TOKEN gitlab/gitlab-runner
-
-
-
-
-
-
 fi
