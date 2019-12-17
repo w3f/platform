@@ -35,8 +35,8 @@ else
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
     # https://docs.gitlab.com/runner/install/kubernetes.html
     helm repo add gitlab https://charts.gitlab.io
-    helm upgrade --install --name gitlab-runner -f --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=${var.registration-token} gitlab/gitlab-runner
-
+    helm repo update
+    helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=${var.gitlab-registration-token} gitlab/gitlab-runner
 
 
 
