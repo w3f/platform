@@ -26,6 +26,4 @@ variable "k8s_version" {
   default = "1.13.6-gke.13"
 }
 
-variable "registration-token" {
-  default = "ABCDE"
-}
+
