@@ -68,9 +68,10 @@ resource "google_container_node_pool" "runner_nodes" {
   node_config {
     preemptible  = false
     machine_type = var.runner_machine_type
-    labels {
+    labels = {
       "gitlab" = "runner"
     }
+    tags = ["gitlab", "runner"]
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
