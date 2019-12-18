@@ -12,7 +12,7 @@ if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners 
     terraform apply -auto-approve
 
 
-    if [ "${DEPLOYMENT}" = development-runners]; then
+    if [ "${DEPLOYMENT}" = development-runners ]; then
       # https://docs.gitlab.com/runner/install/kubernetes.html
       helm repo add gitlab https://charts.gitlab.io
       helm repo update
