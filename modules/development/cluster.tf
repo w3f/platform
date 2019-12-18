@@ -32,6 +32,38 @@ resource "google_container_cluster" "primary" {
   initial_node_count = 1
 }
 
+
+resource "google_container_cluster" "runner" {
+  name     = "${google_container_cluster.runner.name}"
+  location = var.location
+
+  master_auth {
+    username = "${random_id.username.hex}"
+    password = "${random_id.password.hex}"
+
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
+
+  lifecycle {
+    ignore_changes = ["master_auth"]
+  }
+  labels {
+    gitlab = "runner"
+  }
+  tags = ["gitlab", "runner"]
+
+  min_master_version = var.k8s_version
+
+  network = "${google_compute_network.network.self_link}"
+  subnetwork = "${google_compute_subnetwork.subnetwork.self_link}"
+
+  remove_default_node_pool = true
+  initial_node_count = 1
+}
+
+
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${var.cluster_name}-pool"
   location   = var.location
@@ -57,7 +89,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 resource "google_container_node_pool" "runner_nodes" {
   name       = "${var.cluster_name}-runner-pool"
   location   = var.location
-  cluster    = "${google_container_cluster.primary.name}"
+  cluster    = "${google_container_cluster.runner.name}"
   node_count = var.runner_node_count
   version = var.k8s_version
 
