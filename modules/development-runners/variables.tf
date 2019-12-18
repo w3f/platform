@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "development"
+  default = "development-runners"
 }
 
 variable "location" {
