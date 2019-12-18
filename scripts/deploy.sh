@@ -3,13 +3,22 @@ set -xe
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = engineering ]; then
+if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners ] || [ "${DEPLOYMENT}" = engineering ]; then
     echo "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" | tee credentials.json
     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
     terraform init
 
     terraform apply -auto-approve
+
+
+    if [ "${DEPLOYMENT}" = development-runners ]; then
+      # https://docs.gitlab.com/runner/install/kubernetes.html
+      helm repo add gitlab https://charts.gitlab.io
+      helm repo update
+      helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=$GITLAB_TOKEN gitlab/gitlab-runner
+    fi
+
 else
     terraform init \
               -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
@@ -29,7 +38,6 @@ else
     if [ ! $(kubectl get clusterrolebinding | grep tiller) ]; then
         kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
     fi
-
     helm init --service-account tiller --history-max=5
 
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
