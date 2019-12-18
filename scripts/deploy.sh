@@ -3,7 +3,7 @@ set -xe
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = engineering ]; then
+if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners ] || [ "${DEPLOYMENT}" = engineering ]; then
     echo "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" | tee credentials.json
     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
@@ -12,7 +12,7 @@ if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = engineering ]; then
     terraform apply -auto-approve
 
 
-    if [ "${DEPLOYMENT}" = development ]; then
+    if [ "${DEPLOYMENT}" = development-runners]; then
       # https://docs.gitlab.com/runner/install/kubernetes.html
       helm repo add gitlab https://charts.gitlab.io
       helm repo update
