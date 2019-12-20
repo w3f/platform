@@ -79,34 +79,47 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - validate
+      - validate:
+          filters:
+            tags:
+              only: /.*/
       - w3fDeploy:
           requires:
             - validate
           filters:
             branches:
-              only: /^master$/
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - communityDeploy:
           requires:
             - validate
           filters:
             branches:
-              only: /^master$/
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - developmentDeploy:
           requires:
             - validate
           filters:
             branches:
-              only: /^master$/
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - developmentRunnersDeploy:
           requires:
             - validate
           filters:
             branches:
-              only: /^master$/
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - engineeringDeploy:
           requires:
             - validate
           filters:
             branches:
-              only: /^master$/
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
