@@ -27,8 +27,6 @@ resource "google_container_cluster" "runner" {
   }
   tags = ["gitlab", "runner"]
 
-  min_master_version = var.k8s_version
-
   network = "${google_compute_network.network.self_link}"
   subnetwork = "${google_compute_subnetwork.subnetwork.self_link}"
 
@@ -41,7 +39,6 @@ resource "google_container_node_pool" "runner_nodes" {
   location   = var.location
   cluster    = "${google_container_cluster.runner.name}"
   node_count = var.runner_node_count
-  version = var.k8s_version
 
   management {
     auto_upgrade = true

@@ -13,7 +13,3 @@ variable "runner_node_count" {
 variable "runner_machine_type" {
   default = "n1-standard-4"
 }
-
-variable "k8s_version" {
-  default = "1.13.11-gke.14"
-}
