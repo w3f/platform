@@ -13,7 +13,3 @@ variable "node_count" {
 variable "machine_type" {
   default = "n1-standard-2"
 }
-
-variable "k8s_version" {
-  default = "1.13.6-gke.13"
-}
