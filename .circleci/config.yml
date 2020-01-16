@@ -1,6 +1,6 @@
 deploy: &deploy
     docker:
-      - image: hashicorp/terraform:${TERRAFORM_VERSION}
+      - image: hashicorp/terraform:0.12.5
         entrypoint: /bin/sh
     steps:
       - checkout
@@ -34,28 +34,18 @@ validate: &validate
       - run:
           name: checks
           command: |
-            ./scripts/validate.sh
+            ./scripts/validate.sh $BACKEND_CONFIG
 
 version: 2
 jobs:
   communityValidate:
     environment:
       DEPLOYMENT: community
-      BACKEND_CONFIG: |
-        -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
-        -backend-config="secret_key=$SPACES_SECRET_KEY" \
-        -backend-config="bucket=$SPACES_BUCKET_NAME" \
-        -backend-config="endpoint=$SPACES_ENDPOINT"
     <<: *validate
 
   w3fValidate:
     environment:
       DEPLOYMENT: w3f
-      BACKEND_CONFIG: |
-        -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
-        -backend-config="secret_key=$SPACES_SECRET_KEY" \
-        -backend-config="bucket=$SPACES_BUCKET_NAME" \
-        -backend-config="endpoint=$SPACES_ENDPOINT"
     <<: *validate
 
   developmentValidate:
@@ -76,31 +66,26 @@ jobs:
   w3fDeploy:
     environment:
       DEPLOYMENT: w3f
-      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   communityDeploy:
     environment:
       DEPLOYMENT: community
-      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   developmentDeploy:
     environment:
       DEPLOYMENT: development
-      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   developmentRunnersDeploy:
     environment:
       DEPLOYMENT: development-runners
-      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
   engineeringDeploy:
     environment:
       DEPLOYMENT: engineering
-      TERRAFORM_VERSION: 0.12.5
     <<: *deploy
 
 workflows:
