@@ -10,15 +10,6 @@ if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners 
     terraform init
 
     terraform apply -auto-approve
-
-
-    if [ "${DEPLOYMENT}" = development-runners ]; then
-      # https://docs.gitlab.com/runner/install/kubernetes.html
-      helm repo add gitlab https://charts.gitlab.io
-      helm repo update
-      helm upgrade --install gitlab-runner  --set gitlabUrl=https://gitlab.w3f.tech/,runnerRegistrationToken=$GITLAB_TOKEN gitlab/gitlab-runner
-    fi
-
 else
     terraform init \
               -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
