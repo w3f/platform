@@ -10,6 +10,8 @@ resource "google_container_cluster" "primary" {
   name     = var.cluster_name
   location = var.location
 
+  min_master_version = var.k8s_version
+
   master_auth {
     username = "${random_id.username.hex}"
     password = "${random_id.password.hex}"
