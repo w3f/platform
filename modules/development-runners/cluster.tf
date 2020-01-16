@@ -7,7 +7,7 @@ resource "random_id" "password" {
 }
 
 resource "google_container_cluster" "runner" {
-  name     = "${google_container_cluster.runner.name}"
+  name     = var.cluster_name
   location = var.location
 
   master_auth {
@@ -22,10 +22,6 @@ resource "google_container_cluster" "runner" {
   lifecycle {
     ignore_changes = ["master_auth"]
   }
-  labels {
-    gitlab = "runner"
-  }
-  tags = ["gitlab", "runner"]
 
   network = "${google_compute_network.network.self_link}"
   subnetwork = "${google_compute_subnetwork.subnetwork.self_link}"
