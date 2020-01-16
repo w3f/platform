@@ -34,7 +34,7 @@ validate: &validate
       - run:
           name: checks
           command: |
-            ./scripts/validate.sh $BACKEND_CONFIG
+            ./scripts/validate.sh
 
 version: 2
 jobs:
