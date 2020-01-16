@@ -2,8 +2,12 @@ variable "cluster_name" {
   default = "development-runners"
 }
 
-variable "location" {
+variable "region" {
   default = "europe-west4"
+}
+
+variable "zone" {
+  default = "b"
 }
 
 variable "runner_node_count" {

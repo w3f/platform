@@ -8,7 +8,7 @@ resource "random_id" "password" {
 
 resource "google_container_cluster" "runner" {
   name     = var.cluster_name
-  location = var.location
+  location = "${var.region}-${var.zone}"
 
   master_auth {
     username = "${random_id.username.hex}"
@@ -32,7 +32,7 @@ resource "google_container_cluster" "runner" {
 
 resource "google_container_node_pool" "runner_nodes" {
   name       = "${var.cluster_name}-runner-pool"
-  location   = var.location
+  location   = "${var.region}-${var.zone}"
   cluster    = "${google_container_cluster.runner.name}"
   node_count = var.runner_node_count
 
@@ -64,5 +64,5 @@ resource "google_compute_subnetwork" "subnetwork" {
   name          = var.cluster_name
   ip_cidr_range = "10.2.0.0/16"
   network       = "${google_compute_network.network.self_link}"
-  region        = var.location
+  region        = var.region
 }
