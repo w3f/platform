@@ -104,10 +104,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - developmentRunnersValidate:
-          filters:
-            tags:
-              only: /.*/
+      #- developmentRunnersValidate:
+      #    filters:
+      #      tags:
+      #        only: /.*/
       - engineeringValidate:
           filters:
             tags:
@@ -136,14 +136,14 @@ workflows:
               ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      - developmentRunnersDeploy:
-          requires:
-            - developmentRunnersValidate
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+      #- developmentRunnersDeploy:
+      #    requires:
+      #      - developmentRunnersValidate
+      #    filters:
+      #      branches:
+      #        ignore: /.*/
+      #      tags:
+      #        only: /v[0-9]+(\.[0-9]+)*/
       - engineeringDeploy:
           requires:
             - engineeringValidate
