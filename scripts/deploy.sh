@@ -3,20 +3,13 @@ set -xe
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners ] || [ "${DEPLOYMENT}" = engineering ]; then
+if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = playground ] || [ "${DEPLOYMENT}" = engineering ]; then
     echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
     terraform init
 
     terraform apply -auto-approve
-
-    if [ "${DEPLOYMENT}" = development-runners ]; then
-        terraform output kubeconfig &> kubeconfig.yaml
-        export KUBECONFIG=$(pwd)/kubeconfig.yaml
-
-        kubectl apply -f gitlab-admin-service-account.yaml
-    fi
 else
     terraform init \
               -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
