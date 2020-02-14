@@ -53,14 +53,14 @@ jobs:
       DEPLOYMENT: development
     <<: *validate
 
-  developmentRunnersValidate:
-    environment:
-      DEPLOYMENT: development-runners
-    <<: *validate
-
   engineeringValidate:
     environment:
       DEPLOYMENT: engineering
+    <<: *validate
+
+  playgroundValidate:
+    environment:
+      DEPLOYMENT: playground
     <<: *validate
 
   w3fDeploy:
@@ -78,14 +78,14 @@ jobs:
       DEPLOYMENT: development
     <<: *deploy
 
-  developmentRunnersDeploy:
-    environment:
-      DEPLOYMENT: development-runners
-    <<: *deploy
-
   engineeringDeploy:
     environment:
       DEPLOYMENT: engineering
+    <<: *deploy
+
+  playgroundDeploy:
+    environment:
+      DEPLOYMENT: playground
     <<: *deploy
 
 workflows:
@@ -104,11 +104,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      #- developmentRunnersValidate:
-      #    filters:
-      #      tags:
-      #        only: /.*/
       - engineeringValidate:
+          filters:
+            tags:
+              only: /.*/
+      - playgroundValidate:
           filters:
             tags:
               only: /.*/
@@ -136,17 +136,17 @@ workflows:
               ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      #- developmentRunnersDeploy:
-      #    requires:
-      #      - developmentRunnersValidate
-      #    filters:
-      #      branches:
-      #        ignore: /.*/
-      #      tags:
-      #        only: /v[0-9]+(\.[0-9]+)*/
       - engineeringDeploy:
           requires:
             - engineeringValidate
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - playgroundDeploy:
+          requires:
+            - playgroundValidate
           filters:
             branches:
               ignore: /.*/

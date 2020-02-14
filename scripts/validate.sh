@@ -1,9 +1,9 @@
 #!/bin/sh
-set -xe
+set -e
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = development-runners ] || [ "${DEPLOYMENT}" = engineering ]; then
+if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = playground ] || [ "${DEPLOYMENT}" = engineering ]; then
     echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
     export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 

@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "development-runners"
+  default = "substrate-playground"
 }
 
 variable "region" {
@@ -11,9 +11,9 @@ variable "zone" {
 }
 
 variable "runner_node_count" {
-  default = 1
+  default = 3
 }
 
 variable "runner_machine_type" {
-  default = "n1-standard-4"
+  default = "n1-standard-2"
 }
