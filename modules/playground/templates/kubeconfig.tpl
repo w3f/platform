@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Config
 preferences:
   colors: true
-current-context: polkadot-deployer
+current-context: playground
 contexts:
 - context:
     cluster: ${cluster_name}

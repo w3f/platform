@@ -6,7 +6,7 @@ resource "random_id" "password" {
   byte_length = 16
 }
 
-resource "google_container_cluster" "runner" {
+resource "google_container_cluster" "playground" {
   name     = var.cluster_name
   location = "${var.region}-${var.zone}"
 
@@ -30,11 +30,11 @@ resource "google_container_cluster" "runner" {
   initial_node_count = 1
 }
 
-resource "google_container_node_pool" "runner_nodes" {
-  name       = "${var.cluster_name}-runner-pool"
+resource "google_container_node_pool" "playground_nodes" {
+  name       = "${var.cluster_name}-playground-pool"
   location   = "${var.region}-${var.zone}"
-  cluster    = "${google_container_cluster.runner.name}"
-  node_count = var.runner_node_count
+  cluster    = "${google_container_cluster.playground.name}"
+  node_count = var.node_count
 
   management {
     auto_upgrade = true
@@ -42,11 +42,8 @@ resource "google_container_node_pool" "runner_nodes" {
 
   node_config {
     preemptible  = false
-    machine_type = var.runner_machine_type
-    labels = {
-      "gitlab" = "runner"
-    }
-    tags = ["gitlab", "runner"]
+    machine_type = var.machine_type
+    tags = ["playground"]
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
