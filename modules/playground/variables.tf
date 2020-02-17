@@ -11,9 +11,13 @@ variable "zone" {
 }
 
 variable "node_count" {
-  default = 2
+  default = 3
 }
 
 variable "machine_type" {
   default = "n1-standard-4"
+}
+
+variable "image_type" {
+  default = "ubuntu"
 }

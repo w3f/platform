@@ -44,6 +44,7 @@ resource "google_container_node_pool" "playground_nodes" {
     preemptible  = false
     machine_type = var.machine_type
     tags = ["playground"]
+    image_type = var.image_type
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
