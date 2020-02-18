@@ -17,3 +17,7 @@ variable "machine_type" {
 variable "k8s_version" {
   default = "1.14.6-gke.2"
 }
+
+variable "image_type" {
+  default = "ubuntu"
+}
