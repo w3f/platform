@@ -19,5 +19,5 @@ variable "machine_type" {
 }
 
 variable "image_type" {
-  default = "ubuntu"
+  default = "UBUNTU"
 }

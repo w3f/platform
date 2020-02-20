@@ -19,5 +19,5 @@ variable "k8s_version" {
 }
 
 variable "image_type" {
-  default = "ubuntu"
+  default = "UBUNTU"
 }
