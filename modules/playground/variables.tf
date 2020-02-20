@@ -10,8 +10,12 @@ variable "zone" {
   default = "b"
 }
 
-variable "node_count" {
+variable "min_node_count" {
   default = 3
+}
+
+variable "max_node_count" {
+  default = 6
 }
 
 variable "machine_type" {

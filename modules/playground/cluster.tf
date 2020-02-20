@@ -34,7 +34,6 @@ resource "google_container_node_pool" "playground_nodes" {
   name       = "${var.cluster_name}-playground-pool"
   location   = "${var.region}-${var.zone}"
   cluster    = "${google_container_cluster.playground.name}"
-  node_count = var.node_count
 
   management {
     auto_upgrade = true
@@ -50,6 +49,11 @@ resource "google_container_node_pool" "playground_nodes" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
     ]
+  }
+
+  autoscaling {
+    min_node_count = var.min_node_count
+    max_node_count = var.max_node_count
   }
 }
 
