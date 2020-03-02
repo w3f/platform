@@ -3,7 +3,7 @@ set -e
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = w3f ] || [ "${DEPLOYMENT}" = community ] ]; then
+if [ "${DEPLOYMENT}" = w3f ] || [ "${DEPLOYMENT}" = community ]; then
     terraform init -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
               -backend-config="secret_key=$SPACES_SECRET_KEY" \
               -backend-config="bucket=$SPACES_BUCKET_NAME" \
