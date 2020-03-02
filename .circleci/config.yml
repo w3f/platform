@@ -63,6 +63,11 @@ jobs:
       DEPLOYMENT: playground
     <<: *validate
 
+  securityValidate:
+    environment:
+      DEPLOYMENT: security
+    <<: *validate
+
   w3fDeploy:
     environment:
       DEPLOYMENT: w3f
@@ -88,6 +93,11 @@ jobs:
       DEPLOYMENT: playground
     <<: *deploy
 
+  securityDeploy:
+    environment:
+      DEPLOYMENT: security
+    <<: *deploy
+
 workflows:
   version: 2
   test-deploy:
@@ -109,6 +119,10 @@ workflows:
             tags:
               only: /.*/
       - playgroundValidate:
+          filters:
+            tags:
+              only: /.*/
+      - securityValidate:
           filters:
             tags:
               only: /.*/
@@ -147,6 +161,14 @@ workflows:
       - playgroundDeploy:
           requires:
             - playgroundValidate
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - securityDeploy:
+          requires:
+            - securityValidate
           filters:
             branches:
               ignore: /.*/
