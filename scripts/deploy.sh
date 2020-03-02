@@ -3,14 +3,7 @@ set -e
 
 cd ./modules/${DEPLOYMENT}
 
-if [ "${DEPLOYMENT}" = development ] || [ "${DEPLOYMENT}" = playground ] || [ "${DEPLOYMENT}" = engineering ]; then
-    echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
-    export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
-
-    terraform init
-
-    terraform apply -auto-approve
-else
+if [ "${DEPLOYMENT}" = w3f ] || [ "${DEPLOYMENT}" = community ]; then
     terraform init \
               -backend-config="access_key=$SPACES_ACCESS_TOKEN" \
               -backend-config="secret_key=$SPACES_SECRET_KEY" \
@@ -32,4 +25,11 @@ else
     helm init --service-account tiller --history-max=5
 
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
+else
+    echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
+    export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
+
+    terraform init
+
+    terraform apply -auto-approve
 fi
