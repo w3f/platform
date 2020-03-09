@@ -9,7 +9,7 @@ variable "node_count" {
 }
 
 variable "k8s_version" {
-  default = "1.13.4-do.0"
+  default = "1.16.6-do.0"
 }
 
 variable "region" {
