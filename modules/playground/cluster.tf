@@ -10,6 +10,9 @@ resource "google_container_cluster" "playground" {
   name     = var.cluster_name
   location = "${var.region}-${var.zone}"
 
+  min_master_version = var.k8s_version
+  node_version = var.k8s_version
+
   master_auth {
     username = "${random_id.username.hex}"
     password = "${random_id.password.hex}"
@@ -36,7 +39,7 @@ resource "google_container_node_pool" "playground_nodes" {
   cluster    = "${google_container_cluster.playground.name}"
 
   management {
-    auto_upgrade = true
+    auto_upgrade = false
   }
 
   node_config {

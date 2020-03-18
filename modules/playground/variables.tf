@@ -14,6 +14,10 @@ variable "min_node_count" {
   default = 3
 }
 
+variable "k8s_version" {
+  default = "1.15.9-gke.22"
+}
+
 variable "max_node_count" {
   default = 6
 }
