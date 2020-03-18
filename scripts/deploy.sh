@@ -15,15 +15,6 @@ if [ "${DEPLOYMENT}" = w3f ] || [ "${DEPLOYMENT}" = community ]; then
     terraform output kubeconfig &> kubeconfig.yaml
     export KUBECONFIG=$(pwd)/kubeconfig.yaml
 
-    if [ ! $(kubectl get sa -n kube-system | grep tiller) ]; then
-        kubectl -n kube-system create sa tiller
-    fi
-
-    if [ ! $(kubectl get clusterrolebinding | grep tiller) ]; then
-        kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-    fi
-    helm init --service-account tiller --history-max=5
-
     helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
 else
     echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
