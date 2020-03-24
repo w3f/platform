@@ -9,7 +9,7 @@ variable "node_size" {
 }
 
 variable "node_count" {
-  default = 3
+  default = 4
 }
 
 variable "k8s_version" {
