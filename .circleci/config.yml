@@ -7,8 +7,8 @@ deploy: &deploy
       - run:
           name: dependencies
           environment:
-            KUBECTL_VERSION: v1.13.4
-            HELM_VERSION: v2.13.1
+            KUBECTL_VERSION: v1.17.3
+            HELM_VERSION: v3.1.1
           command: |
             apk add --update-cache --upgrade curl
 
@@ -16,10 +16,11 @@ deploy: &deploy
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
 
-            wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
-            tar zxfv helm-${HELM_VERSION}-linux-amd64.tar.gz && \
+            wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
+            tar zxfv helm-${HELM_VERSION}-linux-amd64.tar.gz
             chmod a+x ./linux-amd64/helm
-            mv ./linux-amd64/helm /usr/local/bin/helm
+            mv ./linux-amd64/helm /usr/local/bin
+
       - run:
           name: deploy
           command: |
@@ -58,10 +59,10 @@ jobs:
       DEPLOYMENT: engineering
     <<: *validate
 
-  playgroundValidate:
-    environment:
-      DEPLOYMENT: playground
-    <<: *validate
+#  playgroundValidate:
+#    environment:
+#      DEPLOYMENT: playground
+#    <<: *validate
 
   securityValidate:
     environment:
@@ -88,10 +89,10 @@ jobs:
       DEPLOYMENT: engineering
     <<: *deploy
 
-  playgroundDeploy:
-    environment:
-      DEPLOYMENT: playground
-    <<: *deploy
+#  playgroundDeploy:
+#    environment:
+#      DEPLOYMENT: playground
+#    <<: *deploy
 
   securityDeploy:
     environment:
@@ -118,10 +119,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - playgroundValidate:
-          filters:
-            tags:
-              only: /.*/
+#      - playgroundValidate:
+#          filters:
+#            tags:
+#              only: /.*/
       - securityValidate:
           filters:
             tags:
@@ -158,14 +159,14 @@ workflows:
               ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      - playgroundDeploy:
-          requires:
-            - playgroundValidate
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+#      - playgroundDeploy:
+#          requires:
+#            - playgroundValidate
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /v[0-9]+(\.[0-9]+)*/
       - securityDeploy:
           requires:
             - securityValidate

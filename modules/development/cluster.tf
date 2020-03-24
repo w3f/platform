@@ -11,7 +11,6 @@ resource "google_container_cluster" "primary" {
   location = var.location
 
   min_master_version = var.k8s_version
-  node_version = var.k8s_version
 
   master_auth {
     username = "${random_id.username.hex}"
@@ -39,6 +38,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   location   = var.location
   cluster    = "${google_container_cluster.primary.name}"
   node_count = var.node_count
+  version    = var.k8s_version
 
   management {
     auto_upgrade = false
