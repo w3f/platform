@@ -71,6 +71,13 @@ jobs:
       DEPLOYMENT: security
     <<: *validate
 
+  chinaValidate:
+    environment:
+      DEPLOYMENT: china
+    <<: *validate
+
+########################################################
+
   w3fDeploy:
     environment:
       DEPLOYMENT: w3f
@@ -101,6 +108,11 @@ jobs:
       DEPLOYMENT: security
     <<: *deploy
 
+  chinaDeploy:
+    environment:
+      DEPLOYMENT: china
+    <<: *deploy
+
 workflows:
   version: 2
   test-deploy:
@@ -126,6 +138,10 @@ workflows:
 #            tags:
 #              only: /.*/
       - securityValidate:
+          filters:
+            tags:
+              only: /.*/
+      - chinaValidate:
           filters:
             tags:
               only: /.*/
@@ -172,6 +188,14 @@ workflows:
       - securityDeploy:
           requires:
             - securityValidate
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - chinaDeploy:
+          requires:
+            - chinaValidate
           filters:
             branches:
               ignore: /.*/
