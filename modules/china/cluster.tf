@@ -6,8 +6,8 @@ module "vpc" {
   vpc_name = "w3f"
   vpc_cidr = var.vpc_cidr
 
-  availability_zones = [var.availability_zone]
-  vswitch_cidrs      = [var.vswitch_cidr]
+  availability_zones = var.availability_zones
+  vswitch_cidrs      = var.vswitch_cidrs
 
   vpc_tags = {
     Owner       = "w3f"

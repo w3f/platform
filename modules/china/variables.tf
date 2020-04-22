@@ -6,16 +6,18 @@ variable "region" {
   default = "cn-hangzhou"
 }
 
-variable "availability_zone" {
-  default = "cn-hangzhou-b"
+variable "availability_zones" {
+  type    = list(string)
+  default = ["cn-hangzhou-e", "cn-hangzhou-f", "cn-hangzhou-g"]
+}
+
+variable "vswitch_cidrs" {
+  type    = list(string)
+  default = ["10.10.1.0/24", "10.10.2.0/24", "10.10.3.0/24"]
 }
 
 variable "vpc_cidr" {
   default = "192.168.0.0/16"
-}
-
-variable "vswitch_cidr" {
-  default = "192.168.1.0/24"
 }
 
 variable "node_count" {
