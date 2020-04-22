@@ -17,7 +17,6 @@ module "vpc" {
 }
 
 resource "alicloud_cs_kubernetes" "w3f" {
-  count                 = 1
   master_vswitch_ids    = module.vpc.this_vswitch_ids
   worker_vswitch_ids    = module.vpc.this_vswitch_ids
   master_instance_types = [var.machine_type,var.machine_type,var.machine_type]
@@ -25,6 +24,7 @@ resource "alicloud_cs_kubernetes" "w3f" {
   worker_number         = var.node_count
   install_cloud_monitor = false
   pod_cidr              = var.pod_cidr
+  service_cidr          = var.service_cidr
   image_id              = var.image_type
 
   # version can not be defined in variables.tf
