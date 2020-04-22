@@ -10,9 +10,6 @@ case "${DEPLOYMENT}" in
                   -backend-config="bucket=$SPACES_BUCKET_NAME" \
                   -backend-config="endpoint=$SPACES_ENDPOINT"
         ;;
-    china)
-        terraform init
-        ;;
     *)
         echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
         export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
