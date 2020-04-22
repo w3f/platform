@@ -1,18 +1,25 @@
-resource "alicloud_vpc" "vpc" {
-  cidr_block = var.vpc_cidr
-}
+module "vpc" {
+  source  = "alibaba/vpc/alicloud"
+  region  = var.region
 
-// According to the vswitch cidr blocks to launch several vswitches
-resource "alicloud_vswitch" "vswitch" {
-  vpc_id            = alicloud_vpc.vpc.id
-  cidr_block        = var.vswitch_cidr
-  availability_zone = var.availability_zone
+  create   = true
+  vpc_name = "w3f"
+  vpc_cidr = var.vpc_cidr
+
+  availability_zones = [var.availability_zone]
+  vswitch_cidrs      = [var.vswitch_cidr]
+
+  vpc_tags = {
+    Owner       = "w3f"
+    Environment = "production"
+    Name        = "rpc-nodes"
+  }
 }
 
 resource "alicloud_cs_kubernetes" "w3f" {
   count                 = 1
-  master_vswitch_ids    = [alicloud_vswitch.vswitch.id]
-  worker_vswitch_ids    = [alicloud_vswitch.vswitch.id]
+  master_vswitch_ids    = module.vpc.this_vswitch_ids
+  worker_vswitch_ids    = module.vpc.this_vswitch_ids
   master_instance_types = [var.machine_type,var.machine_type,var.machine_type]
   worker_instance_types = [var.machine_type]
   worker_number         = var.node_count

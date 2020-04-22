@@ -2,6 +2,10 @@ variable "cluster_name" {
   default = "china"
 }
 
+variable "region" {
+  default = "cn-hangzhou"
+}
+
 variable "availability_zone" {
   default = "cn-hangzhou-b"
 }
