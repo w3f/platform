@@ -37,6 +37,8 @@ resource "google_container_node_pool" "playground_nodes" {
   name       = "${var.cluster_name}-playground-pool"
   location   = "${var.region}-${var.zone}"
   cluster    = "${google_container_cluster.playground.name}"
+  node_count = var.node_count
+  version    = var.k8s_version
 
   management {
     auto_upgrade = false
