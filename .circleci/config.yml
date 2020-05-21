@@ -61,10 +61,10 @@ jobs:
       DEPLOYMENT: engineering
     <<: *validate
 
-#  playgroundValidate:
-#    environment:
-#      DEPLOYMENT: playground
-#    <<: *validate
+  playgroundValidate:
+    environment:
+      DEPLOYMENT: playground
+    <<: *validate
 
   securityValidate:
     environment:
@@ -98,10 +98,10 @@ jobs:
       DEPLOYMENT: engineering
     <<: *deploy
 
-#  playgroundDeploy:
-#    environment:
-#      DEPLOYMENT: playground
-#    <<: *deploy
+  playgroundDeploy:
+    environment:
+      DEPLOYMENT: playground
+    <<: *deploy
 
   securityDeploy:
     environment:
@@ -133,10 +133,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-#      - playgroundValidate:
-#          filters:
-#            tags:
-#              only: /.*/
+      - playgroundValidate:
+          filters:
+            tags:
+              only: /.*/
       - securityValidate:
           filters:
             tags:
@@ -177,14 +177,14 @@ workflows:
               ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-#      - playgroundDeploy:
-#          requires:
-#            - playgroundValidate
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /v[0-9]+(\.[0-9]+)*/
+      - playgroundDeploy:
+          requires:
+            - playgroundValidate
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - securityDeploy:
           requires:
             - securityValidate
