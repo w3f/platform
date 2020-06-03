@@ -30,7 +30,7 @@ deploy: &deploy
 
 validate: &validate
     docker:
-      - image: hashicorp/terraform:0.12.5
+      - image: hashicorp/terraform:0.12.25
         entrypoint: /bin/sh
     steps:
       - checkout
