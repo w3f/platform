@@ -21,7 +21,7 @@ case "${DEPLOYMENT}" in
     china)
         terraform init
 
-        terraform destroy
+        terraform destroy -auto-approve
         ;;
     *)
         echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
