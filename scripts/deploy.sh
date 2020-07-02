@@ -19,6 +19,9 @@ case "${DEPLOYMENT}" in
         helm upgrade --install --namespace kube-system -f metrics-server-values.yaml metrics stable/metrics-server
         ;;
     china)
+        echo -n "${GOOGLE_APPLICATION_CREDENTIALS_CONTENT}" > credentials.json
+        export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
+
         terraform init
 
         terraform destroy -auto-approve
