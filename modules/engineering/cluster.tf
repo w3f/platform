@@ -55,6 +55,16 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
+resource "google_compute_firewall" "bitcoin" {
+  name     = "bitcoin-firewall"
+  network = google_compute_network.network.name
+  allow {
+    protocol = "tcp"
+    ports    = ["8332-8333"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
 
 resource "google_compute_network" "network" {
   name                    = var.cluster_name
