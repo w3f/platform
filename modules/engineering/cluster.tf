@@ -56,16 +56,8 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 }
 
 resource "google_compute_firewall" "bitcoin" {
-  name    = "http-firewall"
+  name     = "bitcoin-firewall"
   network = google_compute_network.network.name
-
-  allow {
-    protocol = "icmp"
-  }
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
   allow {
     protocol = "tcp"
     ports    = ["8332-8333"]
