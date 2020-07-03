@@ -55,7 +55,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-resource "google_compute_firewall" "network" {
+resource "google_compute_firewall" "bitcoin" {
   name    = "http-firewall"
   network = google_compute_network.network.name
 
