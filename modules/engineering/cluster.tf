@@ -63,7 +63,7 @@ resource "google_compute_firewall" "bitcoin" {
     ports    = ["8332-8333"]
   }
 
-  source_tags = ["web"]
+  source_ranges = ["0.0.0.0/0"]
 }
 
 resource "google_compute_network" "network" {
