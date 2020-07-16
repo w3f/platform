@@ -66,10 +66,10 @@ jobs:
       DEPLOYMENT: playground
     <<: *validate
 
-  chinaValidate:
-    environment:
-      DEPLOYMENT: china
-    <<: *validate
+  #chinaValidate:
+  #  environment:
+  #    DEPLOYMENT: china
+  #  <<: *validate
 
 ########################################################
 
@@ -127,10 +127,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - chinaValidate:
-          filters:
-            tags:
-              only: /.*/
+      #- chinaValidate:
+      #    filters:
+      #      tags:
+      #        only: /.*/
       - w3fDeploy:
           requires:
             - w3fValidate
@@ -171,11 +171,11 @@ workflows:
       #        ignore: /.*/
       #      tags:
       #        only: /v[0-9]+(\.[0-9]+)*/
-      - chinaDeploy:
-          requires:
-            - chinaValidate
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+      #- chinaDeploy:
+      #    requires:
+      #      - chinaValidate
+      #    filters:
+      #      branches:
+      #        ignore: /.*/
+      #      tags:
+      #        only: /v[0-9]+(\.[0-9]+)*/

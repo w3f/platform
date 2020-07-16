@@ -7,7 +7,7 @@ variable "location" {
 }
 
 variable "node_count" {
-  default = 3
+  default = 4
 }
 
 variable "machine_type" {
