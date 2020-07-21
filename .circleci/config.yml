@@ -1,14 +1,14 @@
 deploy: &deploy
     docker:
-      - image: hashicorp/terraform:0.12.25
+      - image: hashicorp/terraform:0.12.28
         entrypoint: /bin/sh
     steps:
       - checkout
       - run:
           name: dependencies
           environment:
-            KUBECTL_VERSION: v1.17.3
-            HELM_VERSION: v3.1.1
+            KUBECTL_VERSION: v1.18.5
+            HELM_VERSION: v3.2.0
           command: |
             apk add --update-cache --upgrade curl
 
@@ -30,7 +30,7 @@ deploy: &deploy
 
 validate: &validate
     docker:
-      - image: hashicorp/terraform:0.12.25
+      - image: hashicorp/terraform:0.12.28
         entrypoint: /bin/sh
     steps:
       - checkout
