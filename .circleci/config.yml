@@ -1,6 +1,6 @@
 deploy: &deploy
     docker:
-      - image: hashicorp/terraform:0.12.25
+      - image: hashicorp/terraform:0.12.28
         entrypoint: /bin/sh
     steps:
       - checkout
