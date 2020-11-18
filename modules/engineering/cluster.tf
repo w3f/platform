@@ -66,6 +66,18 @@ resource "google_compute_firewall" "bitcoin" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+resource "google_compute_firewall" "teleport" {
+  name     = "teleport-firewall"
+  network = google_compute_network.network.name
+  allow {
+    protocol = "tcp"
+    ports    = ["3023-3026"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+
 resource "google_compute_network" "network" {
   name                    = var.cluster_name
   auto_create_subnetworks = false
