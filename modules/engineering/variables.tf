@@ -7,7 +7,7 @@ variable "location" {
 }
 
 variable "node_count" {
-  default = 5
+  default = 4
 }
 
 variable "machine_type" {
@@ -15,7 +15,7 @@ variable "machine_type" {
 }
 
 variable "k8s_version" {
-  default = "1.16.13-gke.401"
+  default = "1.18.12-gke.1200"
 }
 
 variable "image_type" {
